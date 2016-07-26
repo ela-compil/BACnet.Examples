@@ -467,11 +467,11 @@ namespace BaCSharp
     }
 
     [Serializable]
-    class BacnetWeeklySchedule : ASN1.IASN1encode
+    class BacnetWeeklySchedule : ASN1.IEncode
     {
         public List<DaySchedule>[] days = new List<DaySchedule>[7];
 
-        public void ASN1encode(EncodeBuffer buffer)
+        public void Encode(EncodeBuffer buffer)
         {
             for (int i = 0; i < 7; i++)
             {
@@ -491,17 +491,17 @@ namespace BaCSharp
         }
     }
     [Serializable]
-    class BacnetDeviceObjectPropertyReferenceList : ASN1.IASN1encode
+    class BacnetDeviceObjectPropertyReferenceList : ASN1.IEncode
     {
         public List<BacnetDeviceObjectPropertyReference> references = null;
 
-        public void ASN1encode(EncodeBuffer buffer)
+        public void Encode(EncodeBuffer buffer)
         {
             if (references == null) return;
 
             foreach (BacnetDeviceObjectPropertyReference reference in references)
             {
-                reference.ASN1encode(buffer);
+                reference.Encode(buffer);
             }
         }
     }

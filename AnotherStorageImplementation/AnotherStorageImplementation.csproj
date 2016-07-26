@@ -33,8 +33,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BACnet, Version=1.0.8.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BACnet.1.0.8.3\lib\net40\BACnet.dll</HintPath>
+    <Reference Include="BACnet, Version=1.0.8.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BACnet.1.0.8.5-alpha\lib\net40\BACnet.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
