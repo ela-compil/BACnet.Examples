@@ -74,3 +74,7 @@ Tested on a Raspberry Pi Model B. Similar code based on AnotherStorageImplementa
 ### BacnetToDatabase
 
 A sample application that will transfer all present values from a given device, to a SQL database. (SQL CE Local DB.)
+
+### ObjectBrowseSample
+
+In theory each bacnet device should have object of type OBJECT_DEVICE with property PROP_OBJECT_LIST. This property should contain a list of all bacnet objects (ids) of that device. In this sample we detect bacnet device in local network and try to list its object ids by reading this property. 
