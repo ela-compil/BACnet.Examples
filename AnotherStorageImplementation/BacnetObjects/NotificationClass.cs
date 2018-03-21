@@ -117,10 +117,10 @@ namespace BaCSharp
         }
 
         public void SendIntrinsectEvent(BacnetObjectId SenderObject,
-                    BacnetEventNotificationData.BacnetNotifyTypes notifyType,
-                    BacnetEventNotificationData.BacnetEventTypes evenType,
-                    BacnetEventNotificationData.BacnetEventStates fromstate,
-                    BacnetEventNotificationData.BacnetEventStates tostate)
+                    BacnetNotifyTypes notifyType,
+                    BacnetEventTypes evenType,
+                    BacnetEventStates fromstate,
+                    BacnetEventStates tostate)
         {
 
             if ((m_PROP_RECIPIENT_LIST == null) || (m_PROP_RECIPIENT_LIST.Count == 0))
@@ -166,11 +166,11 @@ namespace BaCSharp
                     DoASend = false;
 
                 // new State is OK ?
-                if ((tostate == BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_OFFNORMAL) && ((devReportEntry.evenType.value[0] & 1) != 1))
+                if ((tostate == BacnetEventStates.EVENT_STATE_OFFNORMAL) && ((devReportEntry.evenType.value[0] & 1) != 1))
                     DoASend = false;
-                if ((tostate == BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_NORMAL) && ((devReportEntry.evenType.value[0] & 2) != 2))
+                if ((tostate == BacnetEventStates.EVENT_STATE_NORMAL) && ((devReportEntry.evenType.value[0] & 2) != 2))
                     DoASend = false;
-                if ((tostate == BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_FAULT) && ((devReportEntry.evenType.value[0] & 4) != 4))
+                if ((tostate == BacnetEventStates.EVENT_STATE_FAULT) && ((devReportEntry.evenType.value[0] & 4) != 4))
                     DoASend = false;
 
                 // Find the receiver endPoint
