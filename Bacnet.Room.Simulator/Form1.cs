@@ -246,9 +246,11 @@ namespace Bacnet.Room.Simulator
             BacnetActivity.SetBacObjectPresentValue(Bac_TempExterieure, new BacnetValue(TempDegre2Value(TempExt)));
             BacnetActivity.SetBacObjectPresentValue(Bac_Niveausoufflage, new BacnetValue(Niveausoufflage));
 
-            BacnetActivity.SetBacObjectPresentValue(Bac_Cmdchauffage, new BacnetValue(ModeChauf));
-            BacnetActivity.SetBacObjectPresentValue(Bac_CmdClim, new BacnetValue(ModeClim));
+            BacnetActivity.SetBacObjectPresentValue(Bac_Cmdchauffage,
+                new BacnetValue(BacnetApplicationTags.BACNET_APPLICATION_TAG_ENUMERATED, Convert.ToUInt32(ModeChauf)));
 
+            BacnetActivity.SetBacObjectPresentValue(Bac_CmdClim,
+                new BacnetValue(BacnetApplicationTags.BACNET_APPLICATION_TAG_ENUMERATED, Convert.ToUInt32(ModeClim)));
         }
 
         private void UpdateIhm()
