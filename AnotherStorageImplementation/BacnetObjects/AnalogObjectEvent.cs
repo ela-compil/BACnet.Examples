@@ -172,11 +172,11 @@ namespace BaCSharp
             double ll = Convert.ToDouble(m_PROP_LOW_LIMIT);
             double db = Convert.ToDouble(m_PROP_DEADBAND);
 
-            bool LimitEnabledHigh = (m_PROP_LIMIT_ENABLE.value[0] & (uint)BacnetEventNotificationData.BacnetLimitEnable.EVENT_HIGH_LIMIT_ENABLE) != 0;
-            bool LimitEnabledLow = (m_PROP_LIMIT_ENABLE.value[0] & (uint)BacnetEventNotificationData.BacnetLimitEnable.EVENT_LOW_LIMIT_ENABLE) != 0;
+            bool LimitEnabledHigh = (m_PROP_LIMIT_ENABLE.value[0] & (uint)BacnetLimitEnable.EVENT_HIGH_LIMIT_ENABLE) != 0;
+            bool LimitEnabledLow = (m_PROP_LIMIT_ENABLE.value[0] & (uint)BacnetLimitEnable.EVENT_LOW_LIMIT_ENABLE) != 0;
 
-            bool EventToOffNormal = (m_PROP_EVENT_ENABLE.value[0] & (uint)BacnetEventNotificationData.BacnetEventEnable.EVENT_ENABLE_TO_OFFNORMAL) != 0;
-            bool EventToNormal = (m_PROP_EVENT_ENABLE.value[0] & (uint)BacnetEventNotificationData.BacnetEventEnable.EVENT_ENABLE_TO_NORMAL) != 0;
+            bool EventToOffNormal = (m_PROP_EVENT_ENABLE.value[0] & (uint)BacnetEventEnable.EVENT_ENABLE_TO_OFFNORMAL) != 0;
+            bool EventToNormal = (m_PROP_EVENT_ENABLE.value[0] & (uint)BacnetEventEnable.EVENT_ENABLE_TO_NORMAL) != 0;
 
             bool NotifyState = false;
 
@@ -185,48 +185,48 @@ namespace BaCSharp
 
             switch (fromState) 
             {
-                case (uint)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_NORMAL :
+                case (uint)BacnetEventStates.EVENT_STATE_NORMAL :
                     /*  If LimitHigh flag is enabled and Present_Value exceed the High_Limit and Event to Offnormal is enabled then 
                        the notification must be done */
                     if ((pv > hl)&&LimitEnabledHigh)
                     {
-                        toState = (int)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_HIGH_LIMIT;
+                        toState = (int)BacnetEventStates.EVENT_STATE_HIGH_LIMIT;
                         NotifyState = EventToOffNormal;
                     }
                     /* If LowLimit flag is enabled and Present_Value exceed the Low_Limit and Event to Offnormal is enabled then 
                        the notification must be done */
                     if ((pv < ll)&LimitEnabledLow)
                     {
-                        toState = (int)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_LOW_LIMIT;
+                        toState = (int)BacnetEventStates.EVENT_STATE_LOW_LIMIT;
                         NotifyState = EventToOffNormal;
                     }
                     break;
-                case (uint)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_HIGH_LIMIT:
+                case (uint)BacnetEventStates.EVENT_STATE_HIGH_LIMIT:
                     /* Present_Value fall below the High_Limit - Deadband ? */
                     if (pv < (hl - db))
                     {
-                        toState = (int)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_NORMAL;
+                        toState = (int)BacnetEventStates.EVENT_STATE_NORMAL;
                         NotifyState =  EventToNormal;
                     }
                     /* Present_Value fall below the Low_Limit ? */
                     if ((pv < ll) && LimitEnabledLow)
                     {
-                        toState = (int)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_LOW_LIMIT;
+                        toState = (int)BacnetEventStates.EVENT_STATE_LOW_LIMIT;
                         if (!NotifyState)
                             NotifyState = EventToOffNormal;
                     }                    
                     break;
-                case (uint)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_LOW_LIMIT:
+                case (uint)BacnetEventStates.EVENT_STATE_LOW_LIMIT:
                     /* Present_Value exceed the Low_Limit + Deadband ? */
                     if (pv > (ll + db))
                     {
-                        toState = (int)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_NORMAL;
+                        toState = (int)BacnetEventStates.EVENT_STATE_NORMAL;
                         NotifyState =  EventToNormal;
                     }
                     /* Present_Value exceed the High_Limit ? */
                     if ((pv > hl) && LimitEnabledHigh)
                     {
-                        toState = (int)BacnetEventNotificationData.BacnetEventStates.EVENT_STATE_HIGH_LIMIT;
+                        toState = (int)BacnetEventStates.EVENT_STATE_HIGH_LIMIT;
                         if (!NotifyState)
                             NotifyState = EventToOffNormal;
                     }
@@ -256,10 +256,10 @@ namespace BaCSharp
             if (nc!=null)
                 nc.SendIntrinsectEvent(
                     m_PROP_OBJECT_IDENTIFIER,
-                    (BacnetEventNotificationData.BacnetNotifyTypes)m_PROP_NOTIFY_TYPE,
-                    BacnetEventNotificationData.BacnetEventTypes.EVENT_CHANGE_OF_VALUE,
-                    (BacnetEventNotificationData.BacnetEventStates)fromState,
-                    (BacnetEventNotificationData.BacnetEventStates)toState);
+                    (BacnetNotifyTypes)m_PROP_NOTIFY_TYPE,
+                    BacnetEventTypes.EVENT_CHANGE_OF_STATE,
+                    (BacnetEventStates)fromState,
+                    (BacnetEventStates)toState);
         }
     }
 }
